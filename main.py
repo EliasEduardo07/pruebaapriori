@@ -69,6 +69,11 @@ def main():
                     conjunto_B = set(conjunto) - conjunto_A
                     soporte_A = sum(1 for receta in recetas if conjunto_A.issubset(receta))
                     soporte_B = sum(1 for receta in recetas if conjunto_B.issubset(receta))
+                    
+                    # Verificar si el soporte de conjunto_A es cero
+                    if soporte_A == 0:
+                        continue
+                    
                     confidence = (soporte_B / soporte_A) * 100
                     if confidence >= min_confidence:
                         reglas_asociacion.append((conjunto_A, conjunto_B, soporte_A, soporte_B, confidence))
