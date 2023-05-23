@@ -2,7 +2,6 @@ import streamlit as st
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 import folium
-from streamlit_folium import folium_static
 
 def main():
     st.title("Búsqueda de supermercados cercanos")
@@ -40,8 +39,7 @@ def main():
         folium.Marker(location=supermarket_coords, popup=popup_text, icon=folium.Icon(color='green')).add_to(m)
 
     # Mostrar el mapa en Streamlit
-    map_html = f'<div>{m.get_root().render()}</div>'
-    st.markdown(map_html, unsafe_allow_html=True)
+    folium_static(m)
 
 def get_user_location():
     try:
