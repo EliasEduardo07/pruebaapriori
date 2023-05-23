@@ -1,5 +1,6 @@
 import streamlit as st
 from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
 import folium
 
 def main():
@@ -32,8 +33,8 @@ def main():
 
     # Marcadores de supermercados cercanos
     for supermarket in supermarkets:
-        supermarket_coords = [supermarket["latitude"], supermarket["longitude"]]
-        distance = calculate_distance(map_center, supermarket_coords)
+        supermarket_coords = (supermarket["latitude"], supermarket["longitude"])
+        distance = calculate_distance(location.point, supermarket_coords)
         popup_text = f"{supermarket['name']} - {distance} km"
         folium.Marker(location=supermarket_coords, popup=popup_text, icon=folium.Icon(color='green')).add_to(m)
 
@@ -50,7 +51,7 @@ def get_user_location():
         return None
 
 def calculate_distance(coords1, coords2):
-    return round(distance(coords1, coords2).kilometers, 2)
+    return round(geodesic(coords1, coords2).kilometers, 2)
 
 if __name__ == "__main__":
     main()
